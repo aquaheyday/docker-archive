@@ -6,7 +6,6 @@ BLUE_PORT=8080
 GREEN_PORT=8081
 NGINX_CONF="./nginx.conf"
 
-# 현재 실행 중인 컨테이너 확인
 CURRENT_RUNNING=$(docker ps --filter "name=app-blue" --format "{{.Names}}")
 
 if [ "$CURRENT_RUNNING" == "app-blue" ]; then
