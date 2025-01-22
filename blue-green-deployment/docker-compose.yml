@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  blue:
+    build:
+      context: .
+    container_name: app-blue
+    environment:
+      - APP_ENV=blue
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  green:
+    build:
+      context: .
+    container_name: app-green
+    environment:
+      - APP_ENV=green
+    ports:
+      - "8081:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
