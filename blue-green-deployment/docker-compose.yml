@@ -1,30 +1,30 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  blue:
+  golang-api-blue:
     build:
       context: .
-    container_name: app-blue
-    environment:
-      - APP_ENV=blue
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+    environment:
+      - GIN_MODE=release
+    container_name: golang-api-blue
+    networks:
+      - production-network
 
-  green:
+  golang-api-green:
     build:
       context: .
-    container_name: app-green
-    environment:
-      - APP_ENV=green
+      dockerfile: Dockerfile
     ports:
       - "8081:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+    environment:
+      - GIN_MODE=release
+    container_name: golang-api-green
+    networks:
+      - production-network
+
+networks:
+  production-network:
+    driver: bridge
