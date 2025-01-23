@@ -14,7 +14,7 @@ Blue-Green 배포는 무중단 배포(Zero-Downtime Deployment)를 가능하게 
 ├── Dockerfile         # Blue와 Green 서비스용 Docker 빌드 설정
 ├── docker-compose.yml # Blue와 Green 컨테이너 관리
 ├── deploy.sh          # 배포 자동화 쉘 스크립트, 파일에 실행 권한이 부여되어야 합니다.(chmod +x deploy.sh)
-├── httpd-vhost.conf   # /etc/httpd/conf.d/httpd-vhost.conf 에 추가할 내용, 경로는 프로젝트마다 상이 할 수 있으니 확인이 필요합니다.
+├── httpd-vhost.conf   # /etc/httpd/conf.d/httpd-vhost.conf 에 추가할 내용(경로는 프로젝트마다 상이 할 수 있으니 확인이 필요합니다.)
 ├── app/
 │   ├── main.go        # Go로 작성된 HTTP 애플리케이션
 │   └── go.mod         # Go 모듈 설정 파일
