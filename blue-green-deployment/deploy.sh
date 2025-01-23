@@ -2,6 +2,7 @@
 
 # Variables
 VHOST_CONF_PATH="/etc/httpd/conf.d/httpd-vhost.conf"
+SSL_CONF_PATH="/etc/httpd/conf.d/ssl.conf"
 BLUE_PORT=8080
 GREEN_PORT=8081
 
@@ -30,12 +31,13 @@ echo "Waiting for $TARGET_CONTAINER to become healthy..."
 sleep 10  # Adjust this based on app startup time
 
 # Update VirtualHost configuration
-echo "Updating VirtualHost configuration to point to $TARGET_PORT..."
+echo "Updating VirtualHost configuration in $VHOST_CONF_PATH and $SSL_CONF_PATH..."
 sudo sed -i "s|http://127.0.0.1:$ACTIVE_PORT/|http://127.0.0.1:$TARGET_PORT/|g" $VHOST_CONF_PATH
+sudo sed -i "s|http://127.0.0.1:$ACTIVE_PORT/|http://127.0.0.1:$TARGET_PORT/|g" $SSL_CONF_PATH
 
 # Reload Apache to apply the changes
 echo "Reloading Apache..."
-sudo systemctl reload httpd
+sudo apachectl graceful
 
 # Stop and remove the old container
 echo "Stopping and removing $ACTIVE_CONTAINER..."
