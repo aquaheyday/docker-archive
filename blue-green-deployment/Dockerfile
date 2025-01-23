@@ -1,9 +1,20 @@
-FROM python:3.9-slim
-
+FROM golang:1.23.4 AS builder
 WORKDIR /app
 
-COPY ./app /app
+COPY ./app ./
+RUN go mod download
 
-RUN pip install -r requirements.txt
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o main .
 
-CMD ["python", "app.py"]
+FROM alpine:latest
+WORKDIR /app
+
+COPY --from=builder /app/main .
+COPY ./app/.env .
+
+ENV BLUE_PORT=8080
+ENV GREEN_PORT=8081
+
+CMD ["sh", "-c", "./main --port=${BLUE_PORT}"]
+
+EXPOSE 8080
