@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  golang-api-blue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - GIN_MODE=release
+    container_name: golang-api-blue
+    networks:
+      - production-network
+
+  golang-api-green:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      - GIN_MODE=release
+    container_name: golang-api-green
+    networks:
+      - production-network
+
+networks:
+  production-network:
+    driver: bridge
