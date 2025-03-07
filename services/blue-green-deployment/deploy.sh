@@ -3,6 +3,8 @@
 # Variables
 VHOST_CONF_PATH="/etc/httpd/conf.d/httpd-vhost.conf"
 SSL_CONF_PATH="/etc/httpd/conf.d/ssl.conf"
+BLUE_CONTAINER="golang-api-blue"
+GREEN_CONTAINER="golang-api-green"
 BLUE_PORT=8080
 GREEN_PORT=8081
 
@@ -11,14 +13,14 @@ if grep -q "ProxyPass / http://127.0.0.1:$BLUE_PORT/" $VHOST_CONF_PATH; then
     echo "Blue is active. Switching to Green..."
     ACTIVE_PORT=$BLUE_PORT
     TARGET_PORT=$GREEN_PORT
-    ACTIVE_CONTAINER="golang-api-blue"
-    TARGET_CONTAINER="golang-api-green"
+    ACTIVE_CONTAINER=$BLUE_CONTAINER
+    TARGET_CONTAINER=$GREEN_CONTAINER
 else
     echo "Green is active. Switching to Blue..."
     ACTIVE_PORT=$GREEN_PORT
     TARGET_PORT=$BLUE_PORT
-    ACTIVE_CONTAINER="golang-api-green"
-    TARGET_CONTAINER="golang-api-blue"
+    ACTIVE_CONTAINER=$GREEN_CONTAINER
+    TARGET_CONTAINER=$BLUE_CONTAINER
 fi
 
 # Build and deploy the target container
